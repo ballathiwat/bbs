@@ -23,7 +23,7 @@ jobs:
           php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
           php composer-setup.php
           php -r "unlink('composer-setup.php');"
-          mv composer.phar C:\ProgramData\ComposerSetup\bin\composer.exe
+          mv composer.phar C:\ProgramData\ComposerSetup\bin
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader

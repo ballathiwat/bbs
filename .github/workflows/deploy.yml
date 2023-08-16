@@ -21,7 +21,7 @@ jobs:
       - name: Install Composer
         run: |
           Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
-          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin\ --filename=composer
+          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin --filename=composer
           Remove-Item -Path composer-setup.php
 
       - name: Install dependencies

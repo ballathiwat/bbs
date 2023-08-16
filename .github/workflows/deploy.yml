@@ -3,11 +3,11 @@ name: bbs
 on:
   push:
     branches:
-      - master  # Change this to the branch you want to deploy from
+      - master  # ชื่อ branch ที่ต้องการให้ทำ Auto Deploy
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -16,17 +16,12 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4  # Change this to the PHP version you want to use
-
-      - name: Install Composer
-        run: |
-          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
-          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin --filename=composer
-          Remove-Item -Path composer-setup.php
+          php-version: 7.4  # รุ่น PHP ที่คุณต้องการใช้
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
       - name: Deploy to server
         run: |
-          # Add your deployment commands here
+          # แก้ไขคำสั่งตามความต้องการ
+          ssh user@your_server_ip 'bash -s' < deploy.sh

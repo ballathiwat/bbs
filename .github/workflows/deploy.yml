@@ -1,32 +1,21 @@
-name: bbs
+name: Laravel
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  deploy:
-    runs-on: windows-latest  
+  laravel-tests:
+
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4  
-
-      - name: Install Composer
-        run: |
-          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
-          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin --filename=composer
-          Remove-Item -Path composer-setup.php
-
-      - name: Install dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: Deploy to server
-        run: |
-          C:\inetpub\wwwroot\bbs\deploy.bat
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+          username: "administrator"
+          host: "cornrester.ddns.net"
+          password: "Ballat26215"
+          script: 'RUN_YPUR_DEPLOYMENT_SCRIPT' #cd C:\inetpub\wwwroot\bbs&& ./deploy.bat

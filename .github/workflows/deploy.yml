@@ -1,13 +1,21 @@
-name: Auto Deploy Laravel
+name: bbs
 
 on:
   push:
     branches:
+<<<<<<< HEAD
       - main  
 
 jobs:
   deploy:
     runs-on: windows-latest  
+=======
+      - master  # ชื่อ branch ที่ต้องการให้ทำ Auto Deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+>>>>>>> 194dec719f98498f830b47c29a77812239d0adfc
 
     steps:
       - name: Checkout code
@@ -16,6 +24,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
+<<<<<<< HEAD
           php-version: 7.4  
 
       - name: Install Composer
@@ -23,10 +32,18 @@ jobs:
           Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
           php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin --filename=composer
           Remove-Item -Path composer-setup.php
+=======
+          php-version: 7.4  # รุ่น PHP ที่คุณต้องการใช้
+>>>>>>> 194dec719f98498f830b47c29a77812239d0adfc
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
       - name: Deploy to server
         run: |
+<<<<<<< HEAD
           C:\inetpub\wwwroot\bbs\deploy.bat
+=======
+          # แก้ไขคำสั่งตามความต้องการ
+          ssh user@your_server_ip 'bash -s' < deploy.sh
+>>>>>>> 194dec719f98498f830b47c29a77812239d0adfc

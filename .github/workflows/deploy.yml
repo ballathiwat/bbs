@@ -3,15 +3,11 @@ name: Auto Deploy Laravel
 on:
   push:
     branches:
-<<<<<<< HEAD
-      - main  # Change this to the branch you want to deploy from
-=======
-      - master  # Change this to the branch you want to deploy from
->>>>>>> 1ebebcaf8af9d44582aa4898592588776d6e4958
+      - main  
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: windows-latest  
 
     steps:
       - name: Checkout code
@@ -20,22 +16,17 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4  # Change this to the PHP version you want to use
+          php-version: 7.4  
 
       - name: Install Composer
         run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php
-          php -r "unlink('composer-setup.php');"
-          mv composer.phar C:\ProgramData\ComposerSetup\bin\
+          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
+          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin --filename=composer
+          Remove-Item -Path composer-setup.php
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
       - name: Deploy to server
         run: |
-<<<<<<< HEAD
-          # Add your deployment commands here
-=======
-          # Add your deployment commands here
->>>>>>> 1ebebcaf8af9d44582aa4898592588776d6e4958
+          C:\inetpub\wwwroot\bbs\deploy.bat

@@ -1,21 +1,33 @@
-name: Laravel
+name: Auto Deploy Laravel
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master  # Change this to the branch you want to deploy from
 
 jobs:
-  laravel-tests:
-
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: windows-latest  # Use Windows runner
 
     steps:
-    - name: Deploy to production
-      uses: appleboy/ssh-action@master
-      with:
-          username: "administrator"
-          host: "cornrester.ddns.net"
-          password: "Ballat26215"
-          script: "cd C:/inetpub/wwwroot/bbs&& ./deploy.bat"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4  # Change this to the PHP version you want to use
+
+      - name: Install Composer
+        run: |
+          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
+          php composer-setup.php --install-dir=C:\composer --filename=composer
+          Remove-Item -Path composer-setup.php
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Deploy to server
+        run: |
+          cd C:\inetpub\wwwroot\bbs
+          C:\inetpub\wwwroot\bbs\deploy.bat

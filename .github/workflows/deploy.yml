@@ -18,12 +18,6 @@ jobs:
         with:
           php-version: 7.4  # Change this to the PHP version you want to use
 
-      - name: Install Composer
-        run: |
-          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
-          php composer-setup.php --install-dir=/usr/local/bin/composer --filename=composer
-          Remove-Item -Path composer-setup.php
-
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 

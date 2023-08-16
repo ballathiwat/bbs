@@ -3,7 +3,7 @@ name: bbs
 on:
   push:
     branches:
-      - main  
+      - master
 
 jobs:
   deploy:

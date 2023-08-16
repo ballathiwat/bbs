@@ -1,0 +1,35 @@
+name: bbs
+
+on:
+  push:
+    branches:
+      - master  # ชื่อ branch ที่ต้องการให้ทำ Auto Deploy
+
+jobs:
+  deploy:
+    runs-on: windows-latest  # ระบุระบบปฏิบัติการที่ใช้เป็น Windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4  # รุ่น PHP ที่คุณต้องการใช้
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+          mv composer.phar /usr/local/bin/composer
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Deploy to server
+        run: |
+          # แก้ไขคำสั่งตามความต้องการ
+          Invoke-WebRequest -Uri 'https://example.com/deploy.ps1' -OutFile 'C:\deploy.ps1'
+          powershell.exe -ExecutionPolicy Bypass -File 'C:\deploy.ps1'

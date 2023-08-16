@@ -20,10 +20,9 @@ jobs:
 
       - name: Install Composer
         run: |
-            Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
-            php composer-setup.php
-            rm composer-setup.php
-            Move-Item -Path .\composer.phar -Destination C:\path\to\desired\location\composer.exe
+          Invoke-WebRequest -Uri 'https://getcomposer.org/installer' -OutFile 'composer-setup.php'
+          php composer-setup.php --install-dir=C:\ProgramData\ComposerSetup\bin\composer.bat --filename=composer
+          Remove-Item -Path composer-setup.php
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader

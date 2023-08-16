@@ -18,4 +18,4 @@ jobs:
           username: "administrator"
           host: "cornrester.ddns.net"
           password: "Ballat26215"
-          script: 'RUN_YPUR_DEPLOYMENT_SCRIPT' #cd C:\inetpub\wwwroot\bbs&& ./deploy.bat
+          script: "cd C:\inetpub\wwwroot\bbs&& ./deploy.bat"

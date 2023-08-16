@@ -20,10 +20,8 @@ jobs:
 
       - name: Install Composer
         run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php
-          php -r "unlink('composer-setup.php');"
-          mv composer.phar C:\ProgramData\ComposerSetup\bin
+          curl -sS https://getcomposer.org/installer | php
+          mv composer.phar /usr/local/bin/composer
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader

@@ -1,13 +1,13 @@
-name: bbs
+name: Auto Deploy Laravel
 
 on:
   push:
     branches:
-      - master  # ชื่อ branch ที่ต้องการให้ทำ Auto Deploy
+      - main  # Change this to the branch you want to deploy from
 
 jobs:
   deploy:
-    runs-on: windows-latest  # ระบุระบบปฏิบัติการที่ใช้เป็น Windows
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
@@ -16,20 +16,18 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4  # รุ่น PHP ที่คุณต้องการใช้
+          php-version: 7.4  # Change this to the PHP version you want to use
 
       - name: Install Composer
         run: |
           php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
           php composer-setup.php
           php -r "unlink('composer-setup.php');"
-          mv composer.phar /usr/local/bin/composer
+          mv composer.phar C:\ProgramData\ComposerSetup\bin\
 
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
       - name: Deploy to server
         run: |
-          # แก้ไขคำสั่งตามความต้องการ
-          Invoke-WebRequest -Uri 'https://example.com/deploy.ps1' -OutFile 'C:\deploy.ps1'
-          powershell.exe -ExecutionPolicy Bypass -File 'C:\deploy.ps1'
+          # Add your deployment commands here
